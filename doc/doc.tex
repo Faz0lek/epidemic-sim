@@ -1,0 +1,62 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[left=2cm, top=3cm, text={17cm, 24cm}]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage[unicode]{hyperref}
+\hypersetup{colorlinks = true, hypertexnames = false}
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\textsc{\Huge Vysoké učení technické v~Brně\\
+				\vspace{0.4em}\huge Fakulta informačních technologií}
+			
+			\vspace{\stretch{0.382}}
+			
+			{\LARGE Typografie a~publikování\,--\,4. projekt\\
+				\Huge Bibliografické citace\\ \vspace{0.3em}}
+			
+			\vspace{\stretch{0.618}}
+			
+			{\Large \today \hfill Martin Kostelník}
+		\end{center}
+	\end{titlepage}
+
+	\section{Typografie}
+		Typografie je obor zabývající se tiskovým písmem. Skládá se ze dvou částí, mikrotypografie a makrotypografie. Mikrotypografie se zabývá zvyšováním estetické kvality sazby. Makrotypografie naopak umístěním písma na stránku. Více o jednotlivých částech se dá najít v \cite{macromicro}.
+		
+		\subsection{Historie}
+			Dějiny typografie začínají v polovině 15.\,století. Dále si zásluhy za rozvoj typografie bere Johannes Gutenberg, který v roce 1439 vynalezl sázení pomocí pohyblivých komponent. \cite{gutten}
+			
+			\vspace{10pt}
+			
+			Zásluhy za typografii si bere také Čech Vojtěch Preissig, který zkoumal vzájemné vztahy barev a tvarových konstrukcí. Více o jeho životě a tvorbě v \cite{Hoskova2013}.
+			
+		\subsection{Znakové sady}
+			Písmo má za sebou dlouhý vývoj. Dnešní písma se odvozují od písem z Egypta a Mezopotámie. Písmo se vývijelo mnoho století. Více informací o písmech lze najít v \cite{Cerny1999}.
+			
+			O fontech v sázecím systému \LaTeX se můžete dočíst v \cite{olsak}.
+			
+	\section{\LaTeX}
+		\LaTeX je sázecí systém k vytváření složitých matematických dokumentů. Práce v \LaTeX u však není úplně jednoduchá. Nicméně na internetu existuje velké množštví návodů. Začátečník by měl začít tvorbou jednoduchých dokumentů, viz. \cite{overleaf}.
+		
+		\subsection{Programy}
+			Existuje více programů, ve kterých lze dokumenty sázet. Některé ukazují i pdf náhled, některé napovídají syntax. Porovnání různých programů se věnuje článek \cite{programs}
+		
+		\subsection{Matematické výrazy}
+			\LaTeX slouží primárně k sázení matematických textů. Pro sazbu se používá matematické prostředí uvozené \$\$. \LaTeX dále podporuje sazbu rovnic, výrazů, tabulek i matic. Matematický režim je více popsán v \cite{mathlatex}.
+		
+			\vspace{10pt}
+			
+			Použití \LaTeX u je také velice výhodné pokud chceme sázet matematické výrazy v prostředí webů. Bez použití \LaTeX u je to velice obtížné, protože základní protokoly nemají žádnou podporu pro matematické výrazy. Jak správně psát takovéto výrazy ve webovém prostředí můžete najít v \cite{webmath}. 
+			
+		\subsection{Citace}
+			Pro vytvoření citací musíme nejprve vytvořit seznam použité literatury a následně vložit odkazy na ně do samotného textu. Pro práci s citacemi existuje více prostředí. například \emph{thebibliography} nebo BiTeX. Podrobněji jsou citace v \LaTeX u popsány na \cite{citation}.
+
+	\newpage
+	\bibliographystyle{czechiso}
+	\renewcommand{\refname}{Literatura}
+	\bibliography{proj4}
+\end{document}

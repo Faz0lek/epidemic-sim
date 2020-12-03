@@ -7,7 +7,7 @@ CC = g++
 
 EXEC = ims-proj
 
-all: $(EXEC)
+all: clean $(EXEC)
 
 $(EXEC):
 	$(CC) -o $(EXEC) src/main.cpp

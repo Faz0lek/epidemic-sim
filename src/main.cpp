@@ -7,130 +7,130 @@
  * @copyright Copyright (c) 2020
  * 
  */
+
 #include <iostream>
+#include <iomanip>
 
-struct State
+/**
+ * @brief Disease contains data about a specific disease in a specific country
+ * 
+ */
+struct Disease
 {
-    double S; // susceptible
-    double I; // infected
-    double D; // diagnosed
-    double A; // ailing - symptomatic, infected, undetected
-    double R; // recognized - detected
-    double T; // threatened - acutely symptomatic
-    double H; // healed
-    double E; // extinct
-};
-
-struct Parameters
-{
-    // transmission rates
-    double alf;
-    double bet;
-    double gam;
-    double del;
+    // Transmission rates (probability of disease transmission in a single contact
+    // multiplied by the average number of contacts per person per day)
+    double alpha;   // Between S and I
+    double beta;    // Between S and D
+    double gamma;   // Between S and A
+    double delta;   // Between S and R
     
-    // probability rate of detection
-    double eps;
-    double the;
+    // Probability rate of detection
+    double epsilon; // For asymptomatic
+    double theta;   // For symptomatic
 
-    // probability rate of infected subject developing clinically relevat symptoms
-    // comparable in absence of specific treatment
-    double zet;
-    double eta;
+    // Probability rate of infected subject developing clinically relevat symptoms
+    // Comparable in absence of specific treatment
+    double zeta;    // Not aware of being infected
+    double eta;     // Aware of being infected
 
-    // rate of infected subject developing life-threatening symptoms
-    // comparable
-    double my;
-    double ny;
+    // Rate of infected subject developing life-threatening symptoms
+    // Comparable in absence of specific treatment
+    double my;  // Undetected
+    double ny;  // Detected
 
-    // mortality rate
+    // Mortality rate
     double tau;
 
-    // rate of recovery
-    double lam;
-    double kap;
-    double ksi;
-    double ro;
-    double sig;
+    // Rate of recovery
+    double lambda;  // Infected
+    double kappa;   // Diagnosed
+    double ksi;     // Ailing
+    double ro;      // Recognized
+    double sigma;   // Threatened
 };
 
-// c - current state
-// p - parameters
-// n - next state
-void sidarthe(State c, Parameters p, State* n)
+/**
+ * @brief This struct describes used model for simulations
+ * 
+ */
+struct SIDARTHE
 {
-    n->S = c.S - c.S * ( p.alf * c.I + p.bet * c.D + p.gam * c.A + p.del * c.R);
-    n->I = c.I + c.S * ( p.alf * c.I + p.bet * c.D + p.gam * c.A + p.del * c.R) - ( p.eps + p.zet + p.lam) * c.I;
-    n->D = c.D + p.eps * c.I - ( p.eta + p.ro ) * c.D;
-    n->A = c.A + p.zet * c.I - ( p.the + p.my + p.kap) * c.A;
-    n->R = c.R + p.eta * c.D + p.the * c.A - ( p.ny + p.ksi ) * c.R;
-    n->T = c.T + p.my * c.A + p.ny * c.R - ( p.sig + p.tau ) * c.T;
-    n->H = c.H + p.lam * c.I + p.ro * c.D + p.kap * c.A + p.ksi * c.R + p.sig * c.T;
-    n->E = c.E + p.tau * c.T;
-}
+    double S; // Susceptible
+    double I; // Infected   (asymptomatic,  infected,   undetected)
+    double D; // Diagnosed  (asymptomatic,  infected,   detected)
+    double A; // Ailing     (symptomatic,   infected,   undetected)
+    double R; // Recognized (symptomatic,   infected,   detected)
+    double T; // Threatened (acutely symptomatic, infected, detected)
+    double H; // Healed
+    double E; // Extinct
 
+    SIDARTHE();
+
+    SIDARTHE(const double I0,
+             const double D0, const double A0,
+             const double R0, const double T0,
+             const double H0, const double E0) : I(I0), D(D0), A(A0), R(R0), T(T0), H(H0), E(E0)
+    {
+        S = 1 - I - D - A - R - T - H - E;
+
+        std::cout << std::fixed;
+        std::cout << std::setprecision(2);
+    }
+
+    void predict(const Disease& d, const size_t days)
+    {
+        double S_prev = S,
+               I_prev = I,
+               D_prev = D,
+               A_prev = A,
+               R_prev = R,
+               T_prev = T;
+
+        for (size_t t = 1; t <= days; t++)
+        {
+            S_prev = S;
+            I_prev = I;
+            D_prev = D;
+            A_prev = A;
+            R_prev = R;
+            T_prev = T;
+
+            S += -S_prev * ( d.alpha * I_prev + d.beta * D_prev + d.gamma * A_prev + d.delta * R_prev);
+            I += S_prev * ( d.alpha * I_prev + d.beta * D_prev + d.gamma * A_prev + d.delta * R_prev)
+                 - (d.epsilon + d.zeta + d.lambda) * I_prev;
+            D += d.epsilon * I_prev - (d.eta + d.ro) * D_prev;
+            A += d.zeta * I_prev - (d.theta + d.my + d.kappa) * A_prev;
+            R += d.eta * D_prev + d.theta * A_prev - (d.ny + d.ksi) * R_prev;
+            T += d.my * A_prev + d.ny * R_prev - ( d.sigma + d.tau ) * T_prev;
+            H += d.lambda * I_prev + d.ro * D_prev + d.kappa * A_prev + d.ksi * R_prev + d.sigma * T_prev;
+            E += d.tau * T_prev;
+
+            printStats(t);
+        }
+    }
+
+    void printStats(const size_t day) const 
+    {
+        std::cout << "----------- DAY " << day << " -----------" << std::endl;
+        std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " %" << std::endl;
+        std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " %" << std::endl;
+        std::cout << "D" << " = " << (D < 0.1 ? " " : "") << D * 100 << " %" << std::endl;
+        std::cout << "A" << " = " << (A < 0.1 ? " " : "") << A * 100 << " %" << std::endl;
+        std::cout << "R" << " = " << (R < 0.1 ? " " : "") << R * 100 << " %" << std::endl;
+        std::cout << "T" << " = " << (T < 0.1 ? " " : "") << T * 100 << " %" << std::endl;
+        std::cout << "H" << " = " << (H < 0.1 ? " " : "") << H * 100 << " %" << std::endl;
+        std::cout << "E" << " = " << (E < 0.1 ? " " : "") << E * 100 << " %" << std::endl;
+    }
+};
 
 int main(int argc, char* argv[])
 {
+    Disease COVID = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
+    SIDARTHE Italy = {200/(60e6), 20/(60e6), 1/(60e6), 2/(60e6), 0, 0, 0};
 
-    State it0;
-    it0.I = 200/(60e6);
-    it0.D = 20/(60e6);
-    it0.A = 1/(60e6);
-    it0.R = 2/(60e6);
-    it0.T = 0;
-    it0.H = 0;
-    it0.E = 0;
-    it0.S = 1 - it0.I - it0.D - it0.A - it0.R - it0.T - it0.H - it0.E;
+    const size_t DAYS = 350;
 
-    Parameters ip;
-    ip.alf = 0.570;
-    ip.bet = ip.del = 0.011;
-    ip.gam = 0.456;
-    ip.eps = 0.171;
-    ip.the = 0.371;
-    ip.zet = ip.eta = 0.125;
-    ip.my = 0.017;
-    ip.ny = 0.027;
-    ip.tau = 0.01;
-    ip.lam = ip.ro = 0.034;
-    ip.kap = ip.ksi = ip.sig = 0.017;
-
-    State it1;
-
-    std::cout << "S" << " = " << it0.S << std::endl;
-    std::cout << "I" << " = " << it0.I << std::endl;
-
-    for(int i = 0; i <= 100; i++)
-    {
-        sidarthe(it0, ip, &it1);
-
-        std::cout << "----------- ITERACE " << i << " -----------" << std::endl;
-        std::cout << "soucet" << " = " << it1.S + it1.I + it1.D + it1.A + it1.R + it1.T + it1.H + it1.E << std::endl;
-        std::cout << "S" << " = " << it1.S << std::endl;
-        std::cout << "I" << " = " << it1.I << std::endl;
-        std::cout << "D" << " = " << it1.D << std::endl;
-        std::cout << "A" << " = " << it1.A << std::endl;
-        std::cout << "R" << " = " << it1.R << std::endl;
-        std::cout << "T" << " = " << it1.T << std::endl;
-        std::cout << "H" << " = " << it1.H << std::endl;
-        std::cout << "E" << " = " << it1.E << std::endl;
-
-        it0 = it1;
-        /*s_n = s_prev - (r * s_prev * i_prev * delta);
-        i_n = i_prev + (((r * s_prev * i_prev) - (a * i_prev)) * delta);
-        r_n = r_prev + (a * i_prev * delta);
-
-        std::cout << "----------- ITERACE " << i << " -----------" << std::endl;
-        std::cout << "s" << " = " << s_n << std::endl;
-        std::cout << "i" << " = " << i_n << std::endl;
-        std::cout << "r" << " = " << r_n << std::endl;
-
-        s_prev = s_n;
-        i_prev = i_n;
-        r_prev = r_n;
-        */
-    }
+    Italy.predict(COVID, DAYS);
 
     return 0;
 }

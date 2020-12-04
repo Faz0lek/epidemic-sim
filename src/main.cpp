@@ -64,19 +64,11 @@ struct SIDARTHE
     double H; // Healed
     double E; // Extinct
 
-    double population;
+    size_t population;
 
     SIDARTHE();
 
-    SIDARTHE(const double I0,
-             const double D0, const double A0,
-             const double R0, const double T0,
-             const double H0, const double E0) : I(I0), D(D0), A(A0), R(R0), T(T0), H(H0), E(E0)
-    {
-        S = 1 - I - D - A - R - T - H - E;
-    }
-
-    SIDARTHE(const double p,
+    SIDARTHE(const size_t p,
              const double I0, const double D0,
              const double A0, const double R0,
              const double T0, const double H0,
@@ -123,21 +115,20 @@ struct SIDARTHE
         std::cout << std::setprecision(2);
 
         std::cout << "----------- DAY " << day << " -----------" << std::endl;
-        std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " %" << std::endl;
-        std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " %" << std::endl;
-        std::cout << "D" << " = " << (D < 0.1 ? " " : "") << D * 100 << " %" << std::endl;
-        std::cout << "A" << " = " << (A < 0.1 ? " " : "") << A * 100 << " %" << std::endl;
-        std::cout << "R" << " = " << (R < 0.1 ? " " : "") << R * 100 << " %" << std::endl;
-        std::cout << "T" << " = " << (T < 0.1 ? " " : "") << T * 100 << " %" << std::endl;
-        std::cout << "H" << " = " << (H < 0.1 ? " " : "") << H * 100 << " %" << std::endl;
-        std::cout << "E" << " = " << (E < 0.1 ? " " : "") << E * 100 << " %" << std::endl;
+        std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " % (" << (int)(S * population) << "/" << population << ")" << std::endl;
+        std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " % (" << (int)(I * population) << "/" << population << ")" << std::endl;
+        std::cout << "D" << " = " << (D < 0.1 ? " " : "") << D * 100 << " % (" << (int)(D * population) << "/" << population << ")" << std::endl;
+        std::cout << "A" << " = " << (A < 0.1 ? " " : "") << A * 100 << " % (" << (int)(A * population) << "/" << population << ")" << std::endl;
+        std::cout << "R" << " = " << (R < 0.1 ? " " : "") << R * 100 << " % (" << (int)(R * population) << "/" << population << ")" << std::endl;
+        std::cout << "T" << " = " << (T < 0.1 ? " " : "") << T * 100 << " % (" << (int)(T * population) << "/" << population << ")" << std::endl;
+        std::cout << "H" << " = " << (H < 0.1 ? " " : "") << H * 100 << " % (" << (int)(H * population) << "/" << population << ")" << std::endl;
+        std::cout << "E" << " = " << (E < 0.1 ? " " : "") << E * 100 << " % (" << (int)(E * population) << "/" << population << ")" << std::endl;
     }
 };
 
 int main(int argc, char* argv[])
 {
     Disease COVID = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
-    // SIDARTHE Italy = {200/(60e6), 20/(60e6), 1/(60e6), 2/(60e6), 0, 0, 0};
     SIDARTHE Italy = {60000000, 200, 20, 1, 2, 0, 0, 0};
 
     const size_t DAYS = 350;

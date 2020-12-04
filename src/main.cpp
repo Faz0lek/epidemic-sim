@@ -64,6 +64,8 @@ struct SIDARTHE
     double H; // Healed
     double E; // Extinct
 
+    double population;
+
     SIDARTHE();
 
     SIDARTHE(const double I0,
@@ -72,9 +74,15 @@ struct SIDARTHE
              const double H0, const double E0) : I(I0), D(D0), A(A0), R(R0), T(T0), H(H0), E(E0)
     {
         S = 1 - I - D - A - R - T - H - E;
+    }
 
-        std::cout << std::fixed;
-        std::cout << std::setprecision(2);
+    SIDARTHE(const double p,
+             const double I0, const double D0,
+             const double A0, const double R0,
+             const double T0, const double H0,
+             const double E0) : population(p), I(I0/p), D(D0/p), A(A0/p), R(R0/p), T(T0/p), H(H0/p)
+    {
+        S = 1 - I - D - A - R - T - H - E;
     }
 
     void predict(const Disease& d, const size_t days)
@@ -111,6 +119,9 @@ struct SIDARTHE
 
     void printStats(const size_t day) const 
     {
+        std::cout << std::fixed;
+        std::cout << std::setprecision(2);
+
         std::cout << "----------- DAY " << day << " -----------" << std::endl;
         std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " %" << std::endl;
         std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " %" << std::endl;
@@ -126,7 +137,8 @@ struct SIDARTHE
 int main(int argc, char* argv[])
 {
     Disease COVID = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
-    SIDARTHE Italy = {200/(60e6), 20/(60e6), 1/(60e6), 2/(60e6), 0, 0, 0};
+    // SIDARTHE Italy = {200/(60e6), 20/(60e6), 1/(60e6), 2/(60e6), 0, 0, 0};
+    SIDARTHE Italy = {60000000, 200, 20, 1, 2, 0, 0, 0};
 
     const size_t DAYS = 350;
 

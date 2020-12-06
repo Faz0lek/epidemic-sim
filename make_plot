@@ -1,0 +1,2 @@
+plot 'data.txt' using 0:2 with lines t "Infected", '' using 0:3 with lines t "Diagnosed", '' using 0:4 with lines t "Ailing", '' using 0:5 with lines t "Recognized", '' using 0:6 with lines t "Threatened"
+    pause mouse close

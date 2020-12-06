@@ -10,6 +10,10 @@
 
 #include <iostream>
 #include <iomanip>
+#include <fstream>
+#include "string.h"
+
+bool raw = false;
 
 /**
  * @brief Disease contains data about a specific disease in a specific country
@@ -77,7 +81,7 @@ struct SIDARTHE
         S = 1 - I - D - A - R - T - H - E;
     }
 
-    void predict(const Disease& d, const size_t days)
+    void predict(const Disease& d, const size_t start, const size_t end)
     {
         double S_prev = S,
                I_prev = I,
@@ -86,7 +90,8 @@ struct SIDARTHE
                R_prev = R,
                T_prev = T;
 
-        for (size_t t = 1; t <= days; t++)
+        std::ofstream file("data.txt", std::ofstream::app);
+        for (size_t t = start; t <= end; t++)
         {
             S_prev = S;
             I_prev = I;
@@ -105,16 +110,16 @@ struct SIDARTHE
             H += d.lambda * I_prev + d.ro * D_prev + d.kappa * A_prev + d.ksi * R_prev + d.sigma * T_prev;
             E += d.tau * T_prev;
 
-            printStats(t);
+            file << S << " " << I << " " << D << " " << A << " " << R << " " << T << " " << H << " " << E << std::endl;
         }
+        file.close();
     }
 
-    void printStats(const size_t day) const 
+    void printStats()
     {
         std::cout << std::fixed;
         std::cout << std::setprecision(2);
-
-        std::cout << "----------- DAY " << day << " -----------" << std::endl;
+        std::cout << "----------------- RESULTS -----------------" << std::endl;
         std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " % (" << (int)(S * population) << "/" << population << ")" << std::endl;
         std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " % (" << (int)(I * population) << "/" << population << ")" << std::endl;
         std::cout << "D" << " = " << (D < 0.1 ? " " : "") << D * 100 << " % (" << (int)(D * population) << "/" << population << ")" << std::endl;
@@ -126,14 +131,84 @@ struct SIDARTHE
     }
 };
 
-int main(int argc, char* argv[])
+void italy()
 {
-    Disease COVID = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
+    // day 1 - 4
+    Disease it_0 = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
+    // day 5 - 12
+    Disease it_1 = it_0;
+    it_1.alpha = 0.422;
+    it_1.beta = it_1.delta = 0.0057;
+    it_1.gamma = 0.285;
+    // day 13 - 22
+    Disease it_2 = it_1;
+    it_2.epsilon = 0.143;
+    // day 23 - 28
+    Disease it_3 = it_2;
+    it_3.alpha = 0.360;
+    it_3.beta = it_3.delta = 0.005;
+    it_3.gamma = 0.2;
+    it_3.zeta = it_3.eta = 0.034;
+    it_3.my = 0.008;
+    it_3.ny = 0.015;
+    it_3.lambda = 0.08;
+    it_3.ro = it_3.kappa = it_3.ksi = it_3.sigma = 0.017;
+    // day 29 - 38
+    Disease it_4 = it_3;
+    it_4.alpha = 0.21;
+    it_4.gamma = 0.11;
+    // day 39 -
+    Disease it_5 = it_4;
+    it_5.epsilon = 0.2;
+    it_5.ro = it_5.kappa = it_5.ksi = 0.02;
+    it_5.sigma = 0.01;
+    it_5.zeta = it_5.eta = 0.025;
+
     SIDARTHE Italy = {60000000, 200, 20, 1, 2, 0, 0, 0};
 
-    const size_t DAYS = 350;
+    Italy.predict(it_0, 0, 4);
+    Italy.predict(it_1, 5, 12);
+    Italy.predict(it_2, 13, 22);
+    Italy.predict(it_3, 23, 29);
+    Italy.predict(it_4, 30, 38);
+    Italy.predict(it_5, 39, 350);
 
-    Italy.predict(COVID, DAYS);
+    Italy.printStats();
+}
+
+void czech()
+{
+    // 01.-17.11. R 0.87058824
+    // 18.-24.11. R 0.74285714
+    // 25.-29.11. R 0.8
+    // 30.-02.12. R 0.83333333
+    // 03.-05.12. R 0.9
+    // hlidacstatu.cz/kapacitanemocnic
+    // ke dni 5.12.2020
+    Disease cz_0 = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
+    SIDARTHE Czech = {10690000, 600000, 40201, 20000, 33436, 576, 476685, 8838};
+    Czech.predict(cz_0, 1, 100);
+}
+
+int main(int argc, char* argv[])
+{
+    if(argc < 2){
+        std::cout << "./ims-proj italy|czech" << std::endl;
+        return 1;
+    }
+
+    std::ofstream file("data.txt", std::ofstream::trunc);
+    file.close();
+
+    if(strcmp(argv[1], "italy") == 0)
+    {
+        italy();
+    }
+    else if(strcmp(argv[1], "czech") == 0)
+    {
+        czech();
+    }
+
 
     return 0;
 }

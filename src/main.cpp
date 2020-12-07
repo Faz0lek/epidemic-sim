@@ -239,8 +239,8 @@ void czech(char* exper)
 int main(int argc, char* argv[])
 {
     if(argc < 2){
-        std::cout << "./ims-proj italy1|italy2|czech" << std::endl;
-        return 1;
+        std::cout << "Please use one of the Makefile targets to run this program." << std::endl;
+        return 0;
     }
 
     std::ofstream file("data.txt", std::ofstream::trunc);

@@ -126,12 +126,19 @@
 			Tento experiment se snaží simulovat šíření nemoci v Itálii od 20. února 2020 do 5. dubna 2020. Celkem se tedy zkoumá čtyřicet šest dní. Během této doby byla v Itálii implementována řada opatření, jejichž následky můžeme sledovat v obrázku \ref{fig2}.
 			
 			Výstup programu:
-			
-			TODO: VYSTUP PROGRAMU PRO EXPERIMENT 1
-
+			\begin{verbatim}
+			S = 99.6836 % (59810139/60000000)
+			I =  0.0182 % (10941/60000000)
+			D =  0.0896 % (53739/60000000)
+			A =  0.0013 % (793/60000000)
+			R =  0.0559 % (33533/60000000)
+			T =  0.0133 % (7961/60000000)
+			H =  0.1363 % (81802/60000000)
+			E =  0.0018 % (1089/60000000)
+			\end{verbatim}
 			
 			\begin{figure}[H]
-				\caption{Porovnání výsledků}
+				\caption{Porovnání výsledků experimentu \ref{e1}}
 				\label{fig2}
 				\centering
 				\includegraphics[scale=0.6]{comparison.png}
@@ -140,7 +147,29 @@
 			Na levém obrázku můžeme vidět graf generovaný z výsledků našeho experimentu. Na pravém obrázku je graf referenční (převzat z \cite{source}). 
 			
 		\subsection{Experiment 2}
-			Tento experiment navazuje na experiment \ref{e1}. Pokouší se simulovat šíření nemoci na větším časovém úseku. 
+		\label{e2}
+			Tento experiment navazuje na experiment \ref{e1}. Pokouší se simulovat šíření nemoci na větším časovém úseku. Celkem 350 dní od 20. února 2020.
+			
+			Výstup programu:
+			\begin{verbatim}
+				S = 99.4270 % (59656223/60000000)
+				I =  0.0002 % (110/60000000)
+				D =  0.0012 % (706/60000000)
+				A =  0.0000 % (7/60000000)
+				R =  0.0016 % (960/60000000)
+				T =  0.0033 % (1972/60000000)
+				H =  0.5113 % (306791/60000000)
+				E =  0.0554 % (33228/60000000)
+			\end{verbatim}
+		
+			\begin{figure}[H]
+				\caption{Porovnání výsledků experimentu \ref{e2}}
+				\label{fig3}
+				\centering
+				\includegraphics[scale=0.6]{comparison2.png}
+			\end{figure}
+		
+			Na levém obrázku můžeme vidět graf generovaný z výsledků našeho experimentu. Na pravém obrázku je graf referenční (převzat z \cite{source}). 
 		
 	\section{Aplikování modelu na Českou republiku}
 	

@@ -30,7 +30,7 @@
 	\end{titlepage}
 
 	\section{Úvod}
-		Tématem práce jsou epidemiologické modely na makroúrovni, konkrétně předpověď šíření pandemie COVID-19 na území Itálie a České republiky. Tato práce implementuje již existující model, který předpovídá vývoj pandemie na území Itálie, a opakuje provedené experimenty. Tento model byl vytvořen Guiliou Giordanem a dalšími \cite{source}. Smyslem projektu je předpovědězení šíření nemoci COVID-19 na území České republiky v následujících měsících, aplikování různých opatření proti šíření a zhodnocení, zda byly dosavadně zavedené opatření dostačující, případně zda bylo rozvolnění těcho opatření správným rozhodnutím.
+		Tématem práce jsou epidemiologické modely na makroúrovni, konkrétně předpověď šíření pandemie COVID-19 na území Itálie a České republiky. Tato práce implementuje již existující model, který předpovídá vývoj pandemie na území Itálie a opakuje provedené experimenty. Tento model byl vytvořen Guiliou Giordanem a dalšími \cite{source}. Smyslem projektu je předpověď šíření nemoci COVID-19 na území České republiky v následujících měsících, aplikování různých opatření proti šíření a zhodnocení, zda byly dosavadní opatření dostačující, případně zda bylo rozvolnění těchto opatření správným rozhodnutím.
 		
 	\subsection{Autoři a zdroje informací}
 		Autory tohoto projektu jsou:
@@ -39,33 +39,33 @@
 			\item Martin Kostelník, xkoste12@stud.fit.vutbr.cz
 		\end{itemize}
 	
-	Jak bylo řečeno v úvodu, samotný model byl převzat z odborné literatury \cite{source}. Při pokusu aplikovat model na prostředí České republiky byly použity data z oficiálních stránek ministerstva zdravotnictví České republiky \cite{mzcr}.
+	Jak bylo řečeno v úvodu, samotný model byl převzat z odborné literatury \cite{source}. Při pokusu aplikovat model na prostředí České republiky byly použity data z oficiálních stránek Ministerstva zdravotnictví České republiky \cite{mzcr}.
 	
 	\subsection{Ověření validity}
 		Validitu modelu jsme ověřovali zkoumáním převzatého modelu, zejména porovnání výsledků prováděných simulací s reálným vývojem pandemie v Itálii. Validita modelu v prostředí České republiky je opět ověřována porovnáním simulačních dat s reálnými.
 	
 	\section{Rozbor tématu a použitých metod/technologií}
-		
+		Model byl převzat z odborného článku \cite{source} publikovaného v časopise Nature Medicine\footnote{https://www.nature.com/nm/}. Všechny data o šíření viru COVID-19 v České republice byly převzaty z oficiálních stránek Ministerstva zdravotnictví České republiky \footnote{https://onemocneni-aktualne.mzcr.cz/covid-19}.
 	
 	\subsection{Popis použitých postupů}
-		Model byl převzat z odborného článku \cite{source} publikovaného v časopise Nature Medicine\footnote{https://www.nature.com/nm/}. Bylo tedy nutné model detailně nastudovat a zkontrolovat dosažené výsledky. Tento konkrétní model nám přišel na modelování pandemie vhodný, jelikož rozděluje společnost do většího množství skupin a počítá s různě těžkými projevy nemoci.
+		Bylo nutné model detailně nastudovat a zkontrolovat dosažené výsledky. Tento konkrétní model nám přišel na modelování pandemie vhodný, jelikož rozděluje společnost do většího množství skupin a počítá s různě těžkými projevy nemoci.
 	
 	\subsection{Popis použitých technologií}
-		Pro provedení experimentů bylo nutné vytvořit simulační model, který jsme implementovali v jazyce C++. Nebylo třeba použít nestandardní knihovny, jelikož se model skládá pouze z řady diferenciálních rovnic. Pro generování grafů byl použit nástroj GNUPlot\footnote{http://www.gnuplot.info/}.
+		Pro provedení experimentů bylo nutné vytvořit simulační model, který jsme implementovali v jazyce C++. Nebylo třeba použít nestandardní knihovny, jelikož se model skládá pouze z řady diferenciálních rovnic a parametrů. Pro vykreslení grafů byl použit nástroj GNUPlot\footnote{http://www.gnuplot.info/}.
 	
 	\pagebreak		
 	\section{Koncepce abstraktího modelu}
-		Model zvaný SIDARTHE je rozšířením jednoduššího SIR modelu, který rozděluje populaci na tři skupiny lidí (náchylní, infikovaní a vyléčení) o dalších pět skupin. Vzniká nám tedy následujících osm skupin.
+		Model zvaný SIDARTHE je rozšířením jednoduššího SIR modelu, který rozděluje populaci na tři skupiny lidí (náchylní, infikovaní a vyléčení), o dalších pět skupin. Vzniká nám tedy následujících osm skupin.
 		
 		\begin{itemize}
-			\item S -- Náchylní (Susceptible) k onemocnění.
-			\item I -- Nakažení (Infected) - asymptomatičtí, vir u nich nebyl detekován.
-			\item D -- Diagnostikovaní (Diagnosed) - asymptomatičtí, vir u nich byl detekován.
-			\item A -- Nemocní (Ailing) - symptomatičtí, nebyli testováni.
-			\item R -- Léčící se (Recognized) - symptomatičtí, byl u nich detekován vir.
-			\item T -- Životně ohrožení (Threatened) - mají těžký průběh nemoci, vyžadují intenzivní péči.
-			\item H -- Vyléčení (Healed).
-			\item E -- Mrtví (Extinct).
+			\item S - Náchylní (Susceptible) k onemocnění.
+			\item I - Nakažení (Infected) - asymptomatičtí, vir u nich nebyl detekován.
+			\item D - Diagnostikovaní (Diagnosed) - asymptomatičtí, vir u nich byl detekován.
+			\item A - Nemocní (Ailing) - symptomatičtí, nebyli testováni.
+			\item R - Léčící se (Recognized) - symptomatičtí, byl u nich detekován vir.
+			\item T - Životně ohrožení (Threatened) - mají těžký průběh nemoci, vyžadují intenzivní péči.
+			\item H - Vyléčení (Healed).
+			\item E - Mrtví (Extinct).
 		\end{itemize}
 	
 		\begin{figure}[H]
@@ -75,7 +75,7 @@
 			\includegraphics[scale=0.25]{model.png}
 		\end{figure}
 	
-		Tento model nepočítá s možností, že se jedinec může virem nakazit opakovaně. I když bylo prokázáno, že se jedinec znovu nakazit může \cite{reinfection}, není stále přesně známo, jakou imunitu si jedinec vybuduje. Takto nakažených je navíc velice malé množštví, například ve Švédsku v polovině října to bylo pouhých 150 případů \cite{reincases}, tudíž je v modelu zanedbáváme.
+		Tento model nepočítá s možností, že se jedinec může virem nakazit opakovaně. I když bylo prokázáno, že se jedinec znovu nakazit může \cite{reinfection}, není stále přesně známo, jakou imunitu si jedinec vybuduje. Takto nakažených je navíc velice malé množštví, například ve Švédsku v polovině října to bylo pouhých sto padesát případů \cite{reincases}, tudíž je v modelu zanedbáváme.
 		
 		\subsection{Matematické vyjádření modelu}
 		\label{mathmodel}
@@ -92,40 +92,44 @@
 			E'(t) &= \tau T(t)
 		\end{align}
 	
-	Kromě množství jedinců ve skupinách, se v rovnicích vyskytují následující paramtry:
+	Kromě množství jedinců ve skupinách se v rovnicích vyskytují následující parametry:
 	\begin{itemize}
-		\item $\alpha$, $\beta$, $\gamma$, $\delta$ -- pravděpodobnost přenosu viru mezi náchylným, infikovaným, diagnostikovaným, nemocným a léčícím se jedincem, vynásobenou průměrným počtem kontaktů za den.
-		\item $\epsilon$, $\theta$ -- pravděpodobnost detekce viru u nakažených a nemocných.
-		\item $\zeta$, $\eta$ -- pravděpodobnost, že se u nakaženého a diagnostikovaného jedince vystkytnou symptomy nemoci.
-		\item $\mu$, $\nu$ -- pravděpodobnost, že se z nemocného a léčícího se jedince stane kriticky ohrožený jedinec.
-		\item $\tau$ -- úmrtnost.
-		\item $\lambda$, $\kappa$, $\xi$, $\rho$ a $\sigma$ -- pravděpodobnost, že se nakažený, nemocný, léčící se, diagnostikovaný, nebo ohrožený jedinec z nemoci vyléčí.
+		\item $\alpha$, $\beta$, $\gamma$, $\delta$ -- pravděpodobnost přenosu viru mezi náchylným, infikovaným, diagnostikovaným, nemocným a léčícím se jedincem vynásobená průměrným počtem kontaktů za den
+		\item $\epsilon$, $\theta$ -- pravděpodobnost detekce viru u nakažených a nemocných
+		\item $\zeta$, $\eta$ -- pravděpodobnost, že se u nakaženého a diagnostikovaného jedince vystkytnou symptomy nemoci
+		\item $\mu$, $\nu$ -- pravděpodobnost, že se z nemocného a léčícího se jedince stane kriticky ohrožený jedinec
+		\item $\tau$ -- úmrtnost
+		\item $\lambda$, $\kappa$, $\xi$, $\rho$ a $\sigma$ -- pravděpodobnost, že se nakažený, nemocný, léčící se, diagnostikovaný nebo ohrožený jedinec z nemoci vyléčí
 	\end{itemize}
 		
 	\section{Architektura simulačního modelu}
-		V implementovaném programu existují dvě struktury, kde jsou uložena všechna data pro provádění simulací. První struktura v sobě uchovává počty jedinců ve skupinách a další informace o území, na kterém se experimenty provádí. V této struktuře je také implementováno chování modelu, které za pomocí druhé struktury a aktuálních informací předpovídá vývoj nemoci. To se provádí iterováním výpočtů. Druhá struktura popisuje aktuální chování nemoci -- obsahuje všechny paramtery pravděpodobnostního charakteru, jež se využívají v simulacích pro určité časové období a pomáhají k lepší definici následků zpřísnění nebo rozvolnění opatření.
+		V implementovaném programu existují dvě struktury, kde jsou uložena všechna data pro provádění simulací. První struktura v sobě uchovává počty jedinců ve skupinách a další informace o území, na kterém se experimenty provádějí. V této struktuře je také implementováno chování modelu, které za pomocí druhé struktury a aktuálních informací předpovídá vývoj nemoci. To se provádí iterováním výpočtů. Druhá struktura popisuje aktuální chování nemoci, obsahuje tedy všechny paramtery pravděpodobnostního charakteru, jež se využívají v simulacích pro určité časové období a pomáhají k lepší definici následků zpřísnění nebo rozvolnění opatření.
 		
 		U tohoto modelu je problematické zadání všech parametrů uživatelem. Uživatel by musel zadat velké množství hodnot a tento přístup by byl velice náchylný k chybám. Proto jsou údaje pro všechny provedené experimenty uloženy přímo ve zdrojovém kódu programu. Jednotlivé experimenty je možné spouštět různými cíly definovanými v souboru \texttt{Makefile}. Konkrétní příkazy pro spuštění experimentů jsou v kapitole \ref{experiments}.
 		
 		Po provedení simulace program vypíše výsledné množství jedinců v každé ze skupin na standardní výstup a zároveň data z každého dne zapisuje do souboru \texttt{data.txt} pro možnost generování grafů.
 		
 		\subsection{Mapování abstraktního modelu do modelu simulačního}
-			Diferenciální rovnice popsané v kapitole \ref{mathmodel} jsou implementovány ve funkci \texttt{predict()}, která je uložena ve struktuře s názvem \texttt{SIDARTHE}. Tato funkce bere na vstupu tři parametry. Prvním je struktura \texttt{Disease} popisující nemoc, druhým a třetím parametrem je počáteční a koncový den simulace. Funkce poté iterativně počítá přírustky jedinců do každé ze skupin a každá iterace představuje jeden den.
+			Diferenciální rovnice popsané v kapitole \ref{mathmodel} jsou implementovány ve funkci \texttt{predict()}, která je uložena ve struktuře s názvem \texttt{SIDARTHE}. Tato funkce dostává na vstupu tři parametry. Prvním je struktura \texttt{Disease} popisující nemoc, druhým a třetím parametrem je počáteční a koncový den simulace. Funkce poté iterativně počítá přírustky jedinců do každé ze skupin a každá iterace představuje jeden den.
 			
 	\section{Podstata simulačních experimentů a jejich průběh}
 	\label{experiments}
-		Experimentování s modelem je rozděleno do dvou částí. V první části se pokusíme zopakovat některé experimenty prováděny autory modelu \cite{source}. Ve druhé části aplikujeme model na prostředí České republiky, kde budeme zkoumat vývoj pandemie v období od 1. listopadu 2020 do 31. ledna 2021 a pokusíme se zhodnotit zavedené opatření a případně doporučit zavedení dalších opatření v blízké době.
+		Cílem experimentování je předpovědět šíření pandemie COVID-19 na území České republiky, zhodnotit zavedená opatření, či zda bylo rozvolnění těchto nebo jiných opatření tím správným přístupem.
 		
-	\section{Zopakování experimentů}
+		\subsection{Postup experimentování}
+			Experimentování s modelem je rozděleno do dvou částí. V části \ref{rep} se pokusíme zopakovat některé experimenty prováděné autory modelu \cite{source}. Ve části \ref{cz} aplikujeme model na prostředí České republiky, kde budeme zkoumat vývoj pandemie v období od 1. listopadu 2020 do 31. ledna 2021. Pro dosavadní vývoj budeme upravovat parametry modelu tak, aby v jednotlivých dnech co nejvíce odpovídaly reálným datům, které byly získány z oficiálních stránek Ministerstva zdravotnictví České republiky\footnote{https://onemocneni-aktualne.mzcr.cz/covid-19}.
+		
+		\subsection{Zopakování experimentů}
+		\label{rep}
 		V této kapitole se pokusíme zopakovat některé z již provedených experimentů a porovnat naše výsledky s referenčními.
 	
-		\subsection{Experiment 1}
+		\subsubsection{Experiment 1}
 		\label{e1}
-			Experiment lze replikovat spuštěním příkazu \texttt{make run1}.
+			Experiment lze replikovat spuštěním příkazu \texttt{make run1}.\\
 		
-			Tento experiment se snaží simulovat šíření nemoci v Itálii od 20. února 2020 do 5. dubna 2020. Celkem se tedy zkoumá čtyřicet šest dní. Během této doby byla v Itálii implementována řada opatření, jejichž následky můžeme sledovat v obrázku \ref{fig2}.
+			Tento experiment se snaží simulovat šíření nemoci v Itálii od 20. února 2020 do 5. dubna 2020. Celkem se tedy zkoumá čtyřicet šest dní. Během této doby byla v Itálii implementována řada opatření, jejichž následky můžeme sledovat v obrázku \ref{fig2}.\\
 			
-			Výstup programu:
+			\noindent Výstup programu:
 			\begin{verbatim}
 			----------------- RESULTS -----------------
 			S = 99.6836 % (59810139/60000000)
@@ -147,12 +151,13 @@
 			
 			Na levém obrázku můžeme vidět graf generovaný z výsledků našeho experimentu. Na pravém obrázku je graf referenční (převzat z \cite{source}). 
 			
-		\subsection{Experiment 2}
+		\subsubsection{Experiment 2}
 		\label{e2}
-			Experiment lze replikovat spuštěním příkazu \texttt{make run2}.
-			Tento experiment navazuje na experiment \ref{e1}. Pokouší se simulovat šíření nemoci na větším časovém úseku. Celkem 350 dní od 20. února 2020.
+			Experiment lze replikovat spuštěním příkazu \texttt{make run2}.\\
 			
-			Výstup programu:
+			Tento experiment navazuje na experiment \ref{e1}. Pokouší se simulovat šíření nemoci na větším časovém úseku. Celkem 350 dní od 20. února 2020.\\
+			
+			\noindent Výstup programu:
 			\begin{verbatim}
 				----------------- RESULTS -----------------
 				S = 99.4270 % (59656223/60000000)
@@ -174,9 +179,23 @@
 		
 			Na levém obrázku můžeme vidět graf generovaný z výsledků našeho experimentu. Na pravém obrázku je graf referenční (převzat z \cite{source}). 
 		
-	\section{Aplikování modelu na Českou republiku}
-		\subsection{Experiment 1}
-			Výstup programu:
+	\subsection{Aplikování modelu na Českou republiku}
+	\label{cz}
+		V této kapitole je popsáno, jak jsme model aplikovali na prostředí České republiky. Bylo nutné vybrat vhodné období pro experimentování a zdokumentovat všechna vládní opatření aplikovaná v tomto období nebo případné rozvolňování těchto opatření.
+		
+		\subsubsection{Experiment 1}
+		\label{ec1}
+			Tento experiment lze replikovat příkazem \texttt{make run}.\\
+			
+			Experiment se pokouší předpovědět šíření nemoci v období od 1. listopadu 2020 do 31. ledna 2021. Průběh experimentů je rozdělen do tří menších období dle měnících se opatření.
+			
+			\begin{enumerate}
+				\item 1.\,11.\,2020 - 17.\,11.\,2020 - Pro toto období byly parametry nastaveny tak, aby výsledky co nejpřesněji kopírovaly reálná data o nakažených.
+				\item 18.\,11.\,2020 - 2.\,12.\,2020 - V tomto období došlo k různým opatřením, největšími faktory jsou však omezení počtu lidí v obchodech a návrat žáků prvních a druhých tříd, návrat závěrečných ročníků středních škol a návrat žáků druhého stupně zakládních škol.
+				\item 3.\,12.\,2020 - 31.\,1.\,2021 - Zde je samotná předpověď, jak by se nákaza mohla šířit.
+			\end{enumerate}
+			
+		\noindent Výstup programu:
 			\begin{verbatim}
 				----------------- RESULTS -----------------
 				S = 84.1108 % (8991444/10690000)
@@ -188,8 +207,21 @@
 				H = 11.9061 % (1272765/10690000)
 				E =  0.1725 % (18442/10690000)
 			\end{verbatim}
-		\subsection{Experiment 2}
-			Výstup programu:
+		
+			\begin{figure}[H]
+				\caption{Graf šíření nemoci}
+				\label{fig4}
+				\centering
+				\includegraphics[scale=0.6]{exp_cz1.png}
+			\end{figure}
+		
+		\subsubsection{Experiment 2}
+		\label{ec2}
+			Tento experiment lze replikovat příkazem \texttt{make run3}.\\
+			
+			Experiment navazuje na experiment \ref{ec1}, avšak ukazuje, jak by se nemoc mohla šířit po dobu jednoho roku. Mluvíme tedy o období od 1. listopadu 2020 do 31. říjma 2021.\\
+			
+			\noindent Výstup programu:
 			\begin{verbatim}
 				----------------- RESULTS -----------------
 				S = 70.2598 % (7510769/10690000)
@@ -201,8 +233,21 @@
 				H = 29.1180 % (3112718/10690000)
 				E =  0.6219 % (66477/10690000)
 			\end{verbatim}
-		\subsection{Experiment 3}
-			Výstup programu:
+		
+			\begin{figure}[H]
+				\caption{Graf šíření nemoci}
+				\label{fig5}
+				\centering
+				\includegraphics[scale=0.6]{exp_cz2.png}
+			\end{figure}
+		
+		\subsubsection{Experiment 3}
+		\label{ec3}
+			Tento experiment lze replikovat příkazem \texttt{make run4}.\\
+			
+			Zde se podíváme, jak by šíření vypadalo v období od 1. listopadu 2020 do 31. ledna 2021 v případě, že by vláda nezmírnila opatření otevřením restaurací a služeb dne 3. prosince 2020.\\
+			
+			\noindent Výstup programu:
 			\begin{verbatim}
 				----------------- RESULTS -----------------
 				S = 94.2215 % (10072274/10690000)
@@ -214,8 +259,20 @@
 				H =  5.6100 % (599710/10690000)
 				E =  0.1188 % (12698/10690000)
 			\end{verbatim}
-		\subsection{Experiment 4}
-			Výstup programu:
+		
+			\begin{figure}[H]
+				\caption{Graf šíření nemoci}
+				\label{fig6}
+				\centering
+				\includegraphics[scale=0.6]{exp_cz3.png}
+			\end{figure}
+		
+		\subsubsection{Experiment 4}
+			Tento experiment lze replikovat příkazem \texttt{make run5}.\\
+		
+			Poslední experiment ukazuje, jak by mohly následky vypadat v případě, že by vláda nezmírnila žádná opatření, avšak neomezila maximální počet lidí v obchodech.\\
+		
+			\noindent Výstup programu:
 			\begin{verbatim}
 				----------------- RESULTS -----------------
 				S = 87.2285 % (9324728/10690000)
@@ -227,9 +284,19 @@
 				H = 11.8343 % (1265089/10690000)
 				E =  0.1452 % (15521/10690000)
 			\end{verbatim}
+		
+			\begin{figure}[H]
+				\caption{Graf šíření nemoci}
+				\label{fig7}
+				\centering
+				\includegraphics[scale=0.6]{exp_cz4.png}
+			\end{figure}
+		
+		\subsection{Závěry experimentů}
+		Bylo provedeno celkem šest experimentů, z nichž první dva ukázaly šíření nemoci v Itálii. Bylo také provedeno porovnání našich výsledků s výsledky autorů modelu \cite{source}. Experimenty v prostředí České republiky nám ukázaly, jak by se mohla pandemie vyvíjet v blízké době a také v době jednoho roku za implementace různých protiopatření.
+		
 	\section{Shrnutí simulačních experimentů a závěr}
-		asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
-		asdfasdfasdfasdfasdfasdfasdfasdf
+		V rámci projektu vznikl nástroj na předpovídání šíření nemoci COVID-19 na území České republiky. Nástroj vychází z modelu publikovaného ve vědeckém článku \cite{source} a rozšiřuje jej o další experimenty. Z experimentu \ref{ec1} je patrné, že při současných opatřeních bude pandemie nabírat na síle a bylo by vhodné implementovat další opatření. V experimentu \ref{ec2} si všimněme, že i při současných opatřeních pandemie do jednoho roku téměř vymizí, avšak za cenu 66\,477 mrtvých. Naopak experiment \ref{ec3} nám ukázal, že pokud by vláda 3.\,prosince 2020 neotevřela restaurace a služby, šíření pandemie by se velmi zpomalilo a nakažených by začalo rapidně ubývat. Můžeme tedy konstatovat, že otevření restaurací nebyl ze strany vlády ten správný krok.
 
 	\newpage
 	\bibliographystyle{czechiso}

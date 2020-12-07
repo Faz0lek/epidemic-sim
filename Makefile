@@ -7,27 +7,53 @@ CC = g++
 
 EXEC = ims-proj
 
+.PHONY = all
+
 all: clean $(EXEC)
 
 $(EXEC):
 	$(CC) -o $(EXEC) src/main.cpp
 
-.PHONY = run
+.PHONY = run1
 
-run1:
+run1: all
 	./$(EXEC) italy1
 
-.PHONY = pack
+.PHONY = run2
 
-run2:
+run2: all
 	./$(EXEC) italy2
+
+.PHONY = run
+
+run: all
+	./$(EXEC) czech1
+
+.PHONY = run
+
+run3: all
+	./$(EXEC) czech2
+
+.PHONY = run
+
+run4: all
+	./$(EXEC) czech3
+
+.PHONY = run
+
+run5: all
+	./$(EXEC) czech4
+
 
 .PHONY = pack
 
 pack:
-	zip -r 02_xsvecr01_xkoste12.zip src/main.ccp doc/doc.pdf Makefile
+	rm -f 02_xsvecr01_xkoste12.zip
+	cp doc/doc.pdf .
+	zip -r 02_xsvecr01_xkoste12.zip src/main.cpp doc.pdf Makefile
+	rm -f doc.pdf
 
 .PHONY = clean
 
 clean:
-	rm -f $(EXEC)
+	rm -f $(EXEC) 02_xsvecr01_xkoste12.zip

@@ -131,7 +131,7 @@ struct SIDARTHE
     }
 };
 
-void italy()
+void italy(int max)
 {
     // day 1 - 4
     Disease it_0 = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
@@ -171,7 +171,7 @@ void italy()
     Italy.predict(it_2, 13, 22);
     Italy.predict(it_3, 23, 29);
     Italy.predict(it_4, 30, 38);
-    Italy.predict(it_5, 39, 350);
+    Italy.predict(it_5, 39, max);
 
     Italy.printStats();
 }
@@ -193,16 +193,20 @@ void czech()
 int main(int argc, char* argv[])
 {
     if(argc < 2){
-        std::cout << "./ims-proj italy|czech" << std::endl;
+        std::cout << "./ims-proj italy1|italy2|czech" << std::endl;
         return 1;
     }
 
     std::ofstream file("data.txt", std::ofstream::trunc);
     file.close();
 
-    if(strcmp(argv[1], "italy") == 0)
+    if(strcmp(argv[1], "italy1") == 0)
     {
-        italy();
+        italy(50);
+    }
+    else if(strcmp(argv[1], "italy2") == 0)
+    {
+        italy(350);
     }
     else if(strcmp(argv[1], "czech") == 0)
     {

@@ -14,8 +14,13 @@ $(EXEC):
 
 .PHONY = run
 
-run:
-	./$(EXEC)
+run1:
+	./$(EXEC) italy1
+
+.PHONY = pack
+
+run2:
+	./$(EXEC) italy2
 
 .PHONY = pack
 

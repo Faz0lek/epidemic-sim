@@ -96,7 +96,7 @@ struct SIDARTHE
              const double I0, const double D0,
              const double A0, const double R0,
              const double T0, const double H0,
-             const double E0) : population(p), I(I0/p), D(D0/p), A(A0/p), R(R0/p), T(T0/p), H(H0/p)
+             const double E0) : population(p), I(I0/p), D(D0/p), A(A0/p), R(R0/p), T(T0/p), H(H0/p), E(E0/p)
     {
         S = 1 - I - D - A - R - T - H - E;
     }
@@ -196,23 +196,66 @@ void italy(int max)
     Italy.printStats();
 }
 
-void czech()
+void czech(char* exper)
 {
-    // 01.-17.11. R 0.87058824
-    // 18.-24.11. R 0.74285714
-    // 25.-29.11. R 0.8
-    // 30.-02.12. R 0.83333333
-    // 03.-05.12. R 0.9
+    SIDARTHE Czech = {10690000, 10000, 29876, 2000, 73292, 8649, 226059, 3775};
 
-    // ke dni 5.12.2020
-    Disease cz_0 = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
-    //SIDARTHE Czech = {10690000, 600000, 40201, 20000, 33436, 576, 476685, 8838};
-    
+    Disease cz_0 = {0.40, 0.006, 0.2 , 0.006, 0.2, 0.371, 0.025, 0.025, 0.002, 0.004, 0.02, 0.1, 0.1, 0.1, 0.1, 0.01};
+    cz_0.alpha = 0.5;
+    cz_0.gamma = 0.3;
+    cz_0.epsilon = 0.2;
+    cz_0.theta = 0.8;
+    cz_0.zeta = 0.255;
+    cz_0.ro = 0.12;
+    cz_0.ksi = 0.12;
+    cz_0.eta = 0.05;
+    cz_0.ny = 0.003;
+
+    Disease cz_1 = cz_0;
+    cz_1.alpha = 0.33;
+    cz_1.gamma = 0.22;
+    cz_1.lambda = 0.015;
+    cz_1.ksi = cz_1.ro = 0.09;
+    cz_1.my = 0.0025;
+    cz_1.ny = 0.0015;
+    cz_1.tau = 0.025;
+
+    Disease cz_2 = cz_1;
+    cz_2.alpha = 0.45;
+    cz_2.gamma = 0.33;
+    cz_2.my = cz_0.my;
+    cz_2.ny = 0.004;
+
     // https://onemocneni-aktualne.mzcr.cz/covid-19
     // ke dni 1.11.2020
-    SIDARTHE Czech = {10690000, 100000, 29876, 25000, 80778, 1163, 226059, 3775};
 
-    Czech.predict(cz_0, 1, 100);
+    // stavajici opatreni, od listopadu do konce ledna
+    if(strcmp(exper, "czech1") == 0)
+    {
+        Czech.predict(cz_0, 1, 17);
+        Czech.predict(cz_1, 18, 32);
+        Czech.predict(cz_2, 33, 92);
+    }
+    // stavajici opatreni, od listopadu 2020 do listopadu 2021
+    else if(strcmp(exper, "czech2") == 0)
+    {
+        Czech.predict(cz_0, 1, 17);
+        Czech.predict(cz_1, 18, 32);
+        Czech.predict(cz_2, 33, 365);
+    }
+    // neotevreni obchodu a restauraci, do konce ledna
+    else if(strcmp(exper, "czech3") == 0)
+    {
+        Czech.predict(cz_0, 1, 17);
+        Czech.predict(cz_1, 18, 92);
+    }
+    // neotevreni skol ani obchodu do konce ledna
+    else if(strcmp(exper, "czech4") == 0)
+    {
+        Czech.predict(cz_0, 1, 92);
+    }
+
+    Czech.printStats();
 }
 
 int main(int argc, char* argv[])
@@ -233,11 +276,13 @@ int main(int argc, char* argv[])
     {
         italy(350);
     }
-    else if(strcmp(argv[1], "czech") == 0)
+    else if(strcmp(argv[1], "czech1") == 0 ||
+            strcmp(argv[1], "czech2") == 0 ||
+            strcmp(argv[1], "czech3") == 0 ||
+            strcmp(argv[1], "czech4") == 0)
     {
-        czech();
+        czech(argv[1]);
     }
-
 
     return 0;
 }

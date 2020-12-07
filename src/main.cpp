@@ -13,8 +13,6 @@
 #include <fstream>
 #include "string.h"
 
-bool raw = false;
-
 /**
  * @brief Disease contains data about a specific disease in a specific country
  * 
@@ -51,26 +49,6 @@ struct Disease
     double ksi;     // Ailing
     double ro;      // Recognized
     double sigma;   // Threatened
-
-    void printStats()
-    {
-        std::cout << "a = " << alpha << std::endl;
-        std::cout << "b = " << beta << std::endl;
-        std::cout << "c = " << gamma << std::endl;
-        std::cout << "d = " << delta << std::endl;
-        std::cout << "e = " << epsilon << std::endl;
-        std::cout << "z = " << zeta << std::endl;
-        std::cout << "L = " << lambda << std::endl;
-        std::cout << "t = " << theta << std::endl;
-        std::cout << "n = " << ny << std::endl;
-        std::cout << "s = " << sigma << std::endl;
-        std::cout << "u = " << tau << std::endl;
-        std::cout << "w = " << eta << std::endl;
-        std::cout << "r = " << ro << std::endl;
-        std::cout << "m = " << my << std::endl;
-        std::cout << "k = " << kappa << std::endl;
-        std::cout << "i = " << ksi << std::endl;
-    }
 };
 
 /**

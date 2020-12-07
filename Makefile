@@ -29,17 +29,17 @@ run2: all
 run: all
 	./$(EXEC) czech1
 
-.PHONY = run
+.PHONY = run3
 
 run3: all
 	./$(EXEC) czech2
 
-.PHONY = run
+.PHONY = run4
 
 run4: all
 	./$(EXEC) czech3
 
-.PHONY = run
+.PHONY = run5
 
 run5: all
 	./$(EXEC) czech4

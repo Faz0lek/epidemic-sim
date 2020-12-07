@@ -51,6 +51,26 @@ struct Disease
     double ksi;     // Ailing
     double ro;      // Recognized
     double sigma;   // Threatened
+
+    void printStats()
+    {
+        std::cout << "a = " << alpha << std::endl;
+        std::cout << "b = " << beta << std::endl;
+        std::cout << "c = " << gamma << std::endl;
+        std::cout << "d = " << delta << std::endl;
+        std::cout << "e = " << epsilon << std::endl;
+        std::cout << "z = " << zeta << std::endl;
+        std::cout << "L = " << lambda << std::endl;
+        std::cout << "t = " << theta << std::endl;
+        std::cout << "n = " << ny << std::endl;
+        std::cout << "s = " << sigma << std::endl;
+        std::cout << "u = " << tau << std::endl;
+        std::cout << "w = " << eta << std::endl;
+        std::cout << "r = " << ro << std::endl;
+        std::cout << "m = " << my << std::endl;
+        std::cout << "k = " << kappa << std::endl;
+        std::cout << "i = " << ksi << std::endl;
+    }
 };
 
 /**
@@ -118,7 +138,7 @@ struct SIDARTHE
     void printStats()
     {
         std::cout << std::fixed;
-        std::cout << std::setprecision(2);
+        std::cout << std::setprecision(4);
         std::cout << "----------------- RESULTS -----------------" << std::endl;
         std::cout << "S" << " = " << (S < 0.1 ? " " : "") << S * 100 << " % (" << (int)(S * population) << "/" << population << ")" << std::endl;
         std::cout << "I" << " = " << (I < 0.1 ? " " : "") << I * 100 << " % (" << (int)(I * population) << "/" << population << ")" << std::endl;
@@ -183,10 +203,15 @@ void czech()
     // 25.-29.11. R 0.8
     // 30.-02.12. R 0.83333333
     // 03.-05.12. R 0.9
-    // hlidacstatu.cz/kapacitanemocnic
+
     // ke dni 5.12.2020
     Disease cz_0 = {0.57, 0.011, 0.456, 0.011, 0.171, 0.371, 0.125, 0.125, 0.017, 0.027, 0.01, 0.034, 0.017, 0.017, 0.034, 0.017};
-    SIDARTHE Czech = {10690000, 600000, 40201, 20000, 33436, 576, 476685, 8838};
+    //SIDARTHE Czech = {10690000, 600000, 40201, 20000, 33436, 576, 476685, 8838};
+    
+    // https://onemocneni-aktualne.mzcr.cz/covid-19
+    // ke dni 1.11.2020
+    SIDARTHE Czech = {10690000, 100000, 29876, 25000, 80778, 1163, 226059, 3775};
+
     Czech.predict(cz_0, 1, 100);
 }
 

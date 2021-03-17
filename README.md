@@ -1,3 +1,3 @@
-# IMS 2020 Project
+# COVID-19 Epidemic simulation
 
-IMS 2020 Project
+Simulation of COVID-19 epidemic in Czech republic during November, December and January.
